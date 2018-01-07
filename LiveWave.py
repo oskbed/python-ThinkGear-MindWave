@@ -122,42 +122,37 @@ class LiveWave:
 				if checksum == check[0]:
 					i = 0
 					while i < payloadLength:
-						try:			#temp solution, waits for pull request.
-							packet = payload[i]
-							if packet == (b'\x80'): # raw value
-								i += 1
-								i += 1
-								val0 = payload[i]
-								#print ("First value:",val0, "is integer", val0[0])
-								i += 1
-								val1 = payload[i]
-								#print ("Second value:",val1, "is integer", val1[0])
-								self.rawValue = val0[0] * 256 + val1[0]
-								if self.rawValue > 32768:
-									self.rawValue = self.rawValue - 65536
-									self.rawBuffer.append(self.rawValue)
-								else:
-									self.rawBuffer.append(self.rawValue)
-								#print ("Signal :", self.rawValue)
-							elif packet == bytes(b'\x02'): # Poor signal
-								i += 1
-								a = payload[i]
-								self.poor_signal = a[0]
-							elif packet == (b'\x04'): # Attention (eSense)
-								i += 1
-								a = payload[i]
-								if a[0]>0:
-									self.attention = a[0]
-							elif packet == (b'\x05'): # Meditation (eSense)
-								i += 1
-								a = payload[i]
-								if a[0]>0:
-									self.meditation = a[0]
-							#Rest of the code packets are WIP#
+						packet = payload[i]
+						if packet == (b'\x80'): # raw value
+							i += 1
+							i += 1
+							val0 = payload[i]
+							#print ("First value:",val0, "is integer", val0[0])
+							i += 1
+							val1 = payload[i]
+							#print ("Second value:",val1, "is integer", val1[0])
+							self.rawValue = val0[0] * 256 + val1[0]
+							if self.rawValue > 32768:
+								self.rawValue = self.rawValue - 65536
+								self.rawBuffer.append(self.rawValue)
 							else:
-								pass
-								i += 1
-						except IndexError:
-							break
-				else:
-					pass
+								self.rawBuffer.append(self.rawValue)
+							#print ("Signal :", self.rawValue)
+						elif packet == bytes(b'\x02'): # Poor signal
+							i += 1
+							a = payload[i]
+							self.poor_signal = a[0]
+						elif packet == (b'\x04'): # Attention (eSense)
+							i += 1
+							a = payload[i]
+							if a[0]>0:
+								self.attention = a[0]
+						elif packet == (b'\x05'): # Meditation (eSense)
+							i += 1
+							a = payload[i]
+							if a[0]>0:
+								self.meditation = a[0]
+						#Rest of the code packets are WIP#
+						else:
+							pass
+						i += 1
