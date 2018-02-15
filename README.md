@@ -6,11 +6,12 @@ http://developer.neurosky.com/docs/doku.php?id=thinkgear_communications_protocol
 
 This is early WIP version and has many issues.
 Things to fix/do:
-- correct class issues (args are not passed correctly)
 - MultiProccessing instead of Threads module.
 - define rest of code packets
 - "write to file" function
-- delete artifacts from packets
 - poor signal detection
 
-At this point, you can make live plots and read raw signal, attention or meditation levels.
+I also created simple GUI in PyQT to visualise the data.
+It comes in two version:
+- low signal resolution (to visualiste signal)
+- high signal resolution (more demanding for cpu, less optimized)
